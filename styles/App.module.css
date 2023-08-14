@@ -1,0 +1,29 @@
+.App {
+    display: flex;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 120px 750px;
+    grid-template-rows: auto;
+    gap: 180px;
+    background-color: #F2F4FF;
+    color: #000000;
+    min-height: 100vh;
+    padding: 4rem 6rem;
+}
+
+.Roadmap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1030px;
+    font-family: Arial;
+    margin: 2rem 0 6rem;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
