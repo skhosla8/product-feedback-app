@@ -64,7 +64,7 @@ function App() {
     };
 
     const renderedFeedbackSuggestions = feedbackSuggestions
-        .map((entry: FeedbackEntry, i: number) => (
+        .map((entry, i: number) => (
             <FeedbackSuggestion
                 key={i}
                 id={entry.id}
@@ -125,7 +125,7 @@ function App() {
                     />
 
                     <div style={{ position: 'absolute', top: 10, left: 10, color: '#ffffff', marginLeft: '1rem', marginTop: '2.5rem' }}>
-                        <h1 style={{ fontSize: '1.2rem', fontFamily: 'Arial', width: '250px' }}>Frontend Mentor</h1>
+                        <h1 style={{ fontSize: '1.2rem', fontFamily: 'Arial', width: '250px' }}>Product Feedback App</h1>
                         <h2 style={{ fontSize: '0.9rem', fontFamily: 'Arial', fontWeight: 400, opacity: 0.75, marginTop: '-0.4rem' }}>Feedback Board</h2>
                     </div>
                 </div>

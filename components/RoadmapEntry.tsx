@@ -4,7 +4,7 @@ import { FeedbackEntry } from '@/interfaces';
 // Components
 import Image from 'next/image';
 // Icons/Images
-import iconArrowUp from '../assets/icon-arrow-up.svg';
+import iconArrowUpBlue from '../assets/icon-arrow-up-blue.svg';
 import iconComments from '../assets/icon-comments.svg';
 
 const RoadmapEntry: FC<FeedbackEntry> = ({
@@ -50,7 +50,7 @@ const RoadmapEntry: FC<FeedbackEntry> = ({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 1.6rem' }}>
                 <button  style={{ display: 'flex', alignItems: 'center', padding: '0.7rem 1.1rem', border: 'none', backgroundColor: '#F2F4FF', borderRadius: '8px', fontWeight: 'bold', marginTop: '0.3rem', cursor: 'pointer'}} >
                     <Image
-                        src={iconArrowUp}
+                        src={iconArrowUpBlue}
                         alt="icon-arrow-up"
                         width={10}
                         height={7}

@@ -10,9 +10,7 @@ import Image from 'next/image';
 import RoadmapEntry from '../components/RoadmapEntry';
 // Icons/Images
 import iconPlus from '../assets/icon-plus.svg';
-import iconArrowLeft from '../assets/icon-arrow-left.svg';
-import iconArrowUp from '../assets/icon-arrow-up.svg';
-import iconComments from '../assets/icon-comments.svg';
+import iconArrowLeft from '../assets/icon-arrow-left-white.svg';
 
 const Roadmap = () => {
     const data = useSelector((state: RootState) => state.feedback.allFeedback);

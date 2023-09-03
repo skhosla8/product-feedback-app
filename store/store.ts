@@ -1,12 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {  combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import { feedbackSlice } from './slices/feedbackSlice';
+import feedbackSlice  from './slices/feedbackSlice';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const reducers = combineReducers({
+    feedback: feedbackSlice
+});
+
+const persistConfig = {
+    key: 'primary',
+    version: 1,
+    storage
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const makeStore = () =>
     configureStore({
-        reducer: {
-            feedback: feedbackSlice.reducer,
-        },
+        reducer: persistedReducer,
+        middleware: getDefaultMiddleware => getDefaultMiddleware({
+            serializableCheck: false,
+        }),
         devTools: true,
     });
 

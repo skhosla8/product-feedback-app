@@ -20,6 +20,14 @@
     margin: 2rem 0 6rem;
 }
 
+.ViewFeedback {
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    font-family: Arial;
+    margin: 2rem 0;
+}
+
 .visible {
     visibility: visible;
 }
