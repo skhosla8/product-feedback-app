@@ -24,9 +24,11 @@ const ViewFeedback = () => {
 
     const data = useSelector((state: RootState) => state.feedback.allFeedback);
 
+    console.log(data)
+
     const dispatch = useDispatch();
 
-    const currentEntryId = localStorage.getItem('current-feedback-entry') || '';
+    const currentEntryId = localStorage.getItem('current-feedback-entry-id') || '';
     const currentEntry = currentEntryId && data.productRequests.find(entry => entry.id === Number(currentEntryId));
 
     const lastFeedbackEntry = data.productRequests.find((elem) => elem.id === data.productRequests.length);
@@ -44,7 +46,7 @@ const ViewFeedback = () => {
             replies={comment.replies}
         />
     ));
-    
+
     const handleUpvoteCount = (id: number) => {
         localStorage.setItem(`upvoted-${id}`, 'true');
 
@@ -96,9 +98,13 @@ const ViewFeedback = () => {
                     </div>
                 </Link>
 
-                <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '150px', backgroundColor: '#4661E6', color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 'bold', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}>
-                    Edit Feedback
-                </button>
+                <Link href='/editFeedback' style={{ textDecoration: 'none' }}>
+                    <button
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '150px', backgroundColor: '#4661E6', color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 'bold', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}>
+                        {/*onClick={() => localStorage.setItem('current-feedback-entry', )}*/}
+                        Edit Feedback
+                    </button>
+                </Link>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#FFFFFF', margin: '1.6rem 0', borderRadius: '12px', padding: '1.7rem', fontFamily: 'Arial' }}>

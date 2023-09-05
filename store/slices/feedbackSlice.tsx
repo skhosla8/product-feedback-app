@@ -389,6 +389,39 @@ export const feedbackSlice = createSlice({
 
             return state;
         },
+        addReplyToComment: (state, action) => {
+            const currentEntry: FeedbackEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.id)!;
+            const currentComment = currentEntry && currentEntry.comments?.find(comment => comment.user.username === action.payload.username);
+
+            if (currentComment) {
+                if (currentComment.replies) {
+                    currentComment && currentComment.replies.push(action.payload.newReply);
+                } else {
+                    currentComment['replies'] = [action.payload.newReply];
+                }
+            }
+
+            return state;
+        },
+        addFeedbackEntry: (state, action) => {
+            return {
+                ...state,
+                allFeedback: {
+                    ...state.allFeedback,
+                    productRequests: [
+                        ...state.allFeedback.productRequests,
+                        action.payload.newEntry
+                    ]
+                }
+            }
+        },
+        editFeedbackEntry: (state, action) => {
+            const currentEntryIndex = state.allFeedback.productRequests.findIndex(elem => elem.id === action.payload.id)!;
+
+            state.allFeedback.productRequests.splice(currentEntryIndex, 1, action.payload.editedEntry);
+
+            return state;
+        }
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
@@ -400,5 +433,13 @@ export const feedbackSlice = createSlice({
     },
 });
 
-export const { sortByUpvotes, sortByComments, increaseUpvote, addCommentToFeedbackEntry } = feedbackSlice.actions;
+export const {
+    sortByUpvotes,
+    sortByComments,
+    increaseUpvote,
+    addCommentToFeedbackEntry,
+    addReplyToComment,
+    addFeedbackEntry,
+    editFeedbackEntry
+} = feedbackSlice.actions;
 export default feedbackSlice.reducer;

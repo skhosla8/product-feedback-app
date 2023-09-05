@@ -28,6 +28,13 @@
     margin: 2rem 0;
 }
 
+.FeedbackForm {
+    display: flex;
+    flex-direction: column;
+    width: 410px;
+    padding-bottom: 3rem;
+}
+
 .visible {
     visibility: visible;
 }

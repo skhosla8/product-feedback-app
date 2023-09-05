@@ -34,7 +34,7 @@ function App() {
     const filteredFeedbackSuggestions = allFeedbackSuggestions.filter((entry: FeedbackEntry) => entry.category === selectedSuggestionCategory);
 
     const plannedFeedbackEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'planned');
-    const inProgressFeedbackEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'in-progress');
+    const inProgressFeedbackEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'in progress');
     const liveFeedbackEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'live');
 
     const feedbackSuggestions = selectedSuggestionCategory ? filteredFeedbackSuggestions : allFeedbackSuggestions;
@@ -67,13 +67,7 @@ function App() {
         .map((entry, i: number) => (
             <FeedbackSuggestion
                 key={i}
-                id={entry.id}
-                title={entry.title}
-                category={entry.category}
-                upvotes={entry.upvotes}
-                status={entry.status}
-                description={entry.description}
-                comments={entry.comments}
+                entry={entry}
             />
         ));
 
@@ -81,7 +75,7 @@ function App() {
         <FeedbackCategoryButton
             key={i}
             i={i}
-            ref={(element: HTMLButtonElement | null) => {feedbackEntryRefs.current[i] = element }}
+            ref={(element: HTMLButtonElement | null) => { feedbackEntryRefs.current[i] = element }}
             feedbackEntryRefs={feedbackEntryRefs}
             setSelectedSuggestionCategory={setSelectedSuggestionCategory}
         />
@@ -137,7 +131,7 @@ function App() {
                 <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', width: '270px', boxSizing: 'border-box', padding: '0.1rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1.5rem', fontSize: '0.9rem' }}>
                         <div style={{ color: 'rgb(55,63,104)', fontWeight: 'bold', fontFamily: 'Arial' }}>Roadmap</div>
-                        <span style={{ fontSize: '0.8rem', cursor: 'pointer' }}><Link href="/roadmap" style={{ color: '#4661E6', fontSize: '0.85rem', fontWeight: 600}}>View</Link></span>
+                        <span style={{ fontSize: '0.8rem', cursor: 'pointer' }}><Link href="/roadmap" style={{ color: '#4661E6', fontSize: '0.85rem', fontWeight: 600 }}>View</Link></span>
                     </div>
 
                     <div style={{ margin: '1.5rem', fontFamily: 'arial' }}>
@@ -248,8 +242,11 @@ function App() {
                         </div>
                     </div>
 
+                    <Link href="/createFeedback" style={{ textDecoration: 'none'}}>
                     <div>
-                        <button style={{ display: 'flex', alignItems: 'center', backgroundColor: '#AD1FEA', color: '#FFFFFF', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}>
+                        <button
+                            style={{ display: 'flex', alignItems: 'center', backgroundColor: '#AD1FEA', color: '#FFFFFF', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}
+                        >
                             <Image
                                 src={iconPlus}
                                 alt="icon-plus"
@@ -260,6 +257,7 @@ function App() {
                             <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Add Feedback</span>
                         </button>
                     </div>
+                    </Link>
                 </div>
 
                 {renderedFeedbackSuggestions?.length ?

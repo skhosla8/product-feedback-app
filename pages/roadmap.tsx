@@ -15,7 +15,7 @@ import iconArrowLeft from '../assets/icon-arrow-left-white.svg';
 const Roadmap = () => {
     const data = useSelector((state: RootState) => state.feedback.allFeedback);
 
-    const numPlaneedEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'planned').length;
+    const numPlannedEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'planned').length;
     const numInProgressEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'in progress').length;
     const numLiveEntries = data.productRequests.filter((entry: FeedbackEntry) => entry.status === 'live').length;
 
@@ -90,7 +90,7 @@ const Roadmap = () => {
 
             <div style={{ display: 'flex', marginTop: '3rem', width: '100%' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', color: 'rgb(55,63,104)', fontWeight: 'bold', fontSize: '1rem' }}>
-                    Planned ({numPlaneedEntries})
+                    Planned ({numPlannedEntries})
                     <span style={{ color: '#647196', fontSize: '0.85rem', fontWeight: 'normal', marginTop: '0.7rem' }}>Ideas prioritized for research</span>
 
                     {renderedPlannedEntries}
