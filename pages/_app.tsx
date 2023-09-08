@@ -4,7 +4,6 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { NextUIProvider } from '@nextui-org/react';
 
 export default function App({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);

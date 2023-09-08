@@ -26,6 +26,8 @@ const CreateFeedback = () => {
             "title": title,
             "category": category.toLowerCase(),
             "upvotes": 0,
+            "isUpvoted": false,
+            "upvoteBtnColor": '#F2F4FE',
             "status": "suggestion",
             "description": detail,
         }

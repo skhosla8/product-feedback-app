@@ -14,7 +14,7 @@ import imageThomas from '../../public/image-thomas.png';
 import imageVictoria from '../../public/image-victoria.png';
 import imageZena from '../../public/image-zena.png';
 
-import { FeedbackEntry, FeedbackEntryComment } from '@/interfaces';
+import { FeedbackEntry } from '@/interfaces';
 
 const initialData = {
     "currentUser": {
@@ -28,6 +28,8 @@ const initialData = {
             "title": "Add tags for solutions",
             "category": "enhancement",
             "upvotes": 112,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "Easier to search for solutions based on a specific stack.",
             "comments": [
@@ -56,6 +58,8 @@ const initialData = {
             "title": "Add a dark theme option",
             "category": "feature",
             "upvotes": 99,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "It would help people with light sensitivities and who prefer dark mode.",
             "comments": [
@@ -104,6 +108,8 @@ const initialData = {
             "title": "Q&A within the challenge hubs",
             "category": "feature",
             "upvotes": 65,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "Challenge-specific Q&A would make for easy reference.",
             "comments": [
@@ -123,6 +129,8 @@ const initialData = {
             "title": "Add image/video upload to feedback",
             "category": "enhancement",
             "upvotes": 51,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "Images and screencasts can enhance comments on solutions.",
             "comments": [
@@ -151,6 +159,8 @@ const initialData = {
             "title": "Ability to follow others",
             "category": "feature",
             "upvotes": 42,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "Stay updated on comments and solutions other people post.",
             "comments": [
@@ -190,6 +200,8 @@ const initialData = {
             "title": "Preview images not loading",
             "category": "bug",
             "upvotes": 3,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "suggestion",
             "description": "Challenge preview images are missing when you apply a filter."
         },
@@ -198,6 +210,8 @@ const initialData = {
             "title": "More comprehensive reports",
             "category": "feature",
             "upvotes": 123,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "planned",
             "description": "It would be great to see a more detailed breakdown of solutions.",
             "comments": [
@@ -226,6 +240,8 @@ const initialData = {
             "title": "Learning paths",
             "category": "feature",
             "upvotes": 28,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "planned",
             "description": "Sequenced projects for different goals to help people improve.",
             "comments": [
@@ -245,6 +261,8 @@ const initialData = {
             "title": "One-click portfolio generation",
             "category": "feature",
             "upvotes": 62,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "in progress",
             "description": "Add ability to create professional looking portfolio from profile.",
             "comments": [
@@ -264,6 +282,8 @@ const initialData = {
             "title": "Bookmark challenges",
             "category": "feature",
             "upvotes": 31,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "in progress",
             "description": "Be able to bookmark challenges to take later on.",
             "comments": [
@@ -283,6 +303,8 @@ const initialData = {
             "title": "Animated solution screenshots",
             "category": "bug",
             "upvotes": 9,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "in progress",
             "description": "Screenshots of solutions with animations don’t display correctly."
         },
@@ -291,6 +313,8 @@ const initialData = {
             "title": "Add micro-interactions",
             "category": "enhancement",
             "upvotes": 71,
+            "isUpvoted": false,
+            "upvoteBtnColor": "#F2F4FE",
             "status": "live",
             "description": "Small animations at specific points can add delight.",
             "comments": [
@@ -370,9 +394,25 @@ export const feedbackSlice = createSlice({
                 }
             }
         },
+        updateIsUpvotedFieldOnEntry: (state, action) => {
+            const currentEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.id);
+
+            if (currentEntry!.hasOwnProperty('isUpvoted')) {
+                currentEntry!.isUpvoted = true;
+            }
+
+            return state;
+        },
         increaseUpvote: (state, action) => {
             const currentEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.id);
             currentEntry!.upvotes += 1;
+
+            return state;
+        },
+        handleUpvoteBtnColor: (state, action) => {
+            const currentEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.id);
+
+            currentEntry!.upvoteBtnColor = '#4661E6';
 
             return state;
         },
@@ -390,12 +430,12 @@ export const feedbackSlice = createSlice({
             return state;
         },
         addReplyToComment: (state, action) => {
-            const currentEntry: FeedbackEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.id)!;
-            const currentComment = currentEntry && currentEntry.comments?.find(comment => comment.user.username === action.payload.username);
+            const currentEntry: FeedbackEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.currentEntryId)!;
+            const currentComment = currentEntry && currentEntry.comments?.find(comment => comment.id === action.payload.ID);
 
             if (currentComment) {
-                if (currentComment.replies) {
-                    currentComment && currentComment.replies.push(action.payload.newReply);
+                if (currentComment?.replies) {
+                    currentComment && currentComment.replies?.push(action.payload.newReply);
                 } else {
                     currentComment['replies'] = [action.payload.newReply];
                 }
@@ -403,6 +443,26 @@ export const feedbackSlice = createSlice({
 
             return state;
         },
+        /*
+        addReplyToReply: (state, action) => {
+            const currentEntry: FeedbackEntry = state.allFeedback.productRequests.find(elem => elem.id === action.payload.currentEntryId)!;
+            const currentComment = currentEntry && currentEntry.comments?.find(comment => comment.id === action.payload.id);
+            const currentReply= currentComment && currentComment.replies?.find(reply => reply.user.username === action.payload.replyingToUsername);
+
+            console.log(currentReply)
+
+            if (currentReply) {
+                if (currentReply.repliesToReplies) {
+                    currentReply && currentReply.repliesToReplies.push(action.payload.newReplyToReply);
+                }
+                else {
+                    currentReply['repliesToReplies'] = [action.payload.newReplyToReply];
+                }
+            }
+
+            return state;
+        },
+        */
         addFeedbackEntry: (state, action) => {
             return {
                 ...state,
@@ -421,7 +481,14 @@ export const feedbackSlice = createSlice({
             state.allFeedback.productRequests.splice(currentEntryIndex, 1, action.payload.editedEntry);
 
             return state;
-        }
+        },
+        deleteFeedbackEntry: (state, action) => {
+            const currentEntryIndex = state.allFeedback.productRequests.findIndex(elem => elem.id === action.payload.id)!;
+
+            state.allFeedback.productRequests.splice(currentEntryIndex, 1);
+
+            return state;
+        },
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
@@ -436,10 +503,14 @@ export const feedbackSlice = createSlice({
 export const {
     sortByUpvotes,
     sortByComments,
+    updateIsUpvotedFieldOnEntry,
     increaseUpvote,
+    handleUpvoteBtnColor,
     addCommentToFeedbackEntry,
     addReplyToComment,
+    /*addReplyToReply,*/
     addFeedbackEntry,
-    editFeedbackEntry
+    editFeedbackEntry,
+    deleteFeedbackEntry
 } = feedbackSlice.actions;
 export default feedbackSlice.reducer;

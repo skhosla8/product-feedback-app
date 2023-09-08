@@ -30,6 +30,7 @@ interface FeedbackFormProps {
     selectedCategory: string,
     setSelectedCategory: Dispatch<SetStateAction<string>>,
     editEntry?: (title: string, category: string, status: string, detail: string) => void,
+    deleteEntry?: () => void
 }
 
 const FeedbackForm: FC<FeedbackFormProps> = ({
@@ -48,7 +49,8 @@ const FeedbackForm: FC<FeedbackFormProps> = ({
     setFeedbackDetail,
     selectedCategory,
     setSelectedCategory,
-    editEntry }) => {
+    editEntry,
+    deleteEntry }) => {
 
     const [isOpenCategorySelect, setIsOpenCategorySelect] = useState(false);
 
@@ -201,7 +203,9 @@ const FeedbackForm: FC<FeedbackFormProps> = ({
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem', marginBottom: '0.3rem' }}>
                     <div>
                         <button
-                            style={{ display: 'flex', alignItems: 'center', backgroundColor: '#D73737', color: '#F2F4FE', border: 'none', padding: '0.6rem 1.1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 'bold', marginRight: '0.8rem' }}>
+                            style={{ display: 'flex', alignItems: 'center', backgroundColor: '#D73737', color: '#F2F4FE', border: 'none', padding: '0.6rem 1.1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 'bold', marginRight: '0.8rem' }}
+                            onClick={deleteEntry}
+                        >
                             Delete
                         </button>
                     </div>

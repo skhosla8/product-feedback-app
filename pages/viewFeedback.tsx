@@ -1,10 +1,10 @@
 // Base Imports
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from '@/styles/App.module.css';
 import { RootState } from '@/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { FeedbackEntryComment } from '@/interfaces';
-import { increaseUpvote, addCommentToFeedbackEntry } from '@/store/slices/feedbackSlice';
+import { increaseUpvote, addCommentToFeedbackEntry, handleUpvoteBtnColor, updateIsUpvotedFieldOnEntry } from '@/store/slices/feedbackSlice';
 import { capitalizeStr } from '@/utilities';
 // Components
 import Link from 'next/link';
@@ -24,8 +24,6 @@ const ViewFeedback = () => {
 
     const data = useSelector((state: RootState) => state.feedback.allFeedback);
 
-    console.log(data)
-
     const dispatch = useDispatch();
 
     const currentEntryId = localStorage.getItem('current-feedback-entry-id') || '';
@@ -33,8 +31,6 @@ const ViewFeedback = () => {
 
     const lastFeedbackEntry = data.productRequests.find((elem) => elem.id === data.productRequests.length);
     const lastCommentInLastFeedbackEntryId = lastFeedbackEntry && lastFeedbackEntry.comments && lastFeedbackEntry.comments[lastFeedbackEntry.comments.length - 1].id;
-
-    let upvoted = localStorage.getItem(`upvoted-${currentEntry && currentEntry.id}`) || '';
 
     const renderedEntryComments = currentEntry && currentEntry.comments?.map((comment: FeedbackEntryComment, i: number) => (
         <FeedbackComment
@@ -51,6 +47,8 @@ const ViewFeedback = () => {
         localStorage.setItem(`upvoted-${id}`, 'true');
 
         dispatch(increaseUpvote({ id }));
+        dispatch(updateIsUpvotedFieldOnEntry({id }));
+        dispatch(handleUpvoteBtnColor({ id }));
     }
 
     const addComment = () => {
@@ -67,21 +65,12 @@ const ViewFeedback = () => {
         }
 
         dispatch(addCommentToFeedbackEntry({ id, comment }));
+        setNewComment('');
     }
 
     const handleNewComment = (e: { target: { value: string }; }) => {
         setCharactersLeft(`${250 - e.target.value.length}`);
     }
-
-    useEffect(() => {
-        let upvoteBtn = document.getElementById(`upvoteBtn-${currentEntry && currentEntry.id}`);
-
-        if (upvoted === 'true') {
-            upvoteBtn!.style.backgroundColor = '#4661E6';
-            upvoteBtn!.style.color = '#FFFFFF';
-        }
-
-    }, [upvoted, currentEntry]);
 
     return (
         <div className={styles.ViewFeedback}>
@@ -101,7 +90,6 @@ const ViewFeedback = () => {
                 <Link href='/editFeedback' style={{ textDecoration: 'none' }}>
                     <button
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '150px', backgroundColor: '#4661E6', color: '#FFFFFF', fontSize: '0.8rem', fontWeight: 'bold', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}>
-                        {/*onClick={() => localStorage.setItem('current-feedback-entry', )}*/}
                         Edit Feedback
                     </button>
                 </Link>
@@ -112,10 +100,10 @@ const ViewFeedback = () => {
                     <div
                         id={`upvoteBtn-${currentEntry && currentEntry.id}`}
                         /*ref={(element: HTMLDivElement) => { upvoteButtonRef.current[id] = element }}*/
-                        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F2F4FE', width: '35px', height: '47px', borderRadius: '8px', cursor: 'pointer' }}
+                        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: currentEntry && currentEntry.upvoteBtnColor, width: '35px', height: '47px', borderRadius: '8px', cursor: 'pointer' }}
                         onClick={() => currentEntry && handleUpvoteCount(currentEntry.id)}>
                         <Image
-                            src={upvoted === 'true' ? iconArrowUpWhite : iconArrowUpBlue}
+                            src={currentEntry && currentEntry.isUpvoted ? iconArrowUpWhite : iconArrowUpBlue}
                             alt="icon-arrow-up"
                             width={8}
                             height={6}
@@ -123,7 +111,7 @@ const ViewFeedback = () => {
                         />
                         <span
                             /*ref={(element: HTMLSpanElement) => { upvoteCountRef.current[id] = element }}*/
-                            style={{ fontWeight: 'bold', fontSize: '0.7rem', color: '#3A4374', marginTop: '0.4rem' }}>
+                            style={{ fontWeight: 'bold', fontSize: '0.7rem', color: currentEntry && currentEntry.isUpvoted ? '#FFFFFF' : '#3A4374', marginTop: '0.4rem' }}>
                             {currentEntry && currentEntry.upvotes}
                         </span>
                     </div>

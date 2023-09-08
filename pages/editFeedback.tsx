@@ -1,15 +1,13 @@
 // Base Imports
 import React, { useState } from 'react';
-import { RootState } from '@/store/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { editFeedbackEntry } from '@/store/slices/feedbackSlice';
+import { useDispatch } from 'react-redux';
+import { editFeedbackEntry, deleteFeedbackEntry } from '@/store/slices/feedbackSlice';
 import { capitalizeStr } from '@/utilities';
 import Router from 'next/router';
 // Components 
 import FeedbackForm from '@/components/FeedbackForm';
 // Icons/Images
 import iconEditFeedback from '../assets/icon-edit-feedback.svg';
-import { dataFocusVisibleClasses } from '@nextui-org/react';
 
 const EditFeedback = () => {
     const [isOpenEditForm, setIsOpenEditForm] = useState(true);
@@ -26,10 +24,9 @@ const EditFeedback = () => {
 
     const editEntry = (title: string, category: string, status: string, detail: string) => {
         let id = currentEntry.id;
-        let formattedStatus;
 
         if (status === 'In-Progress') {
-            formattedStatus = status.replace('-', ' ');
+            status = status.replace('-', ' ');
         }
 
         let editedEntry = {
@@ -37,12 +34,22 @@ const EditFeedback = () => {
             "title": title,
             "category": category.toLowerCase(),
             "upvotes": currentEntry.upvotes,
-            "status": formattedStatus?.toLowerCase(),
+            "isUpvoted": currentEntry.isUpvoted,
+            "upvoteBtnColor": currentEntry.upvoteBtnColor,
+            "status": status?.toLowerCase(),
             "description": detail,
             "comments": currentEntry.comments
         }
 
         dispatch(editFeedbackEntry({ id, editedEntry }));
+        Router.push('/');
+    };
+
+    const deleteEntry = () => {
+        let id = currentEntry.id;
+        
+        dispatch(deleteFeedbackEntry({ id }));
+
         Router.push('/');
     };
 
@@ -63,6 +70,7 @@ const EditFeedback = () => {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
             editEntry={editEntry}
+            deleteEntry={deleteEntry}
         />
     )
 }

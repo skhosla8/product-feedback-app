@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image"
+import { Dispatch, SetStateAction } from "react";
 
 export interface FeedbackEntry {
   i?: number,
@@ -6,6 +7,8 @@ export interface FeedbackEntry {
   title: string,
   category: string,
   upvotes: number,
+  isUpvoted?: boolean,
+  upvoteBtnColor: string,
   status: string,
   description: string,
   comments?: Array<FeedbackEntryComment>
@@ -17,7 +20,6 @@ export interface FeedbackEntryComment {
   content: string,
   user: FeedbackEntryUser,
   replies?: Array<FeedbackEntryReply>,
-  currentEntry?: object
 }
 
 export interface FeedbackEntryUser {
@@ -28,7 +30,13 @@ export interface FeedbackEntryUser {
 }
 
 export interface FeedbackEntryReply {
+  i?: number,
+  commentId?: number,
   content: string,
-  replyingTo: string,
-  user: FeedbackEntryUser
+  replyingTo?: string,
+  user: FeedbackEntryUser,
+  username?: string,
+  isReplyToComment?: boolean,
+  setIsReplyToComment?: Dispatch<SetStateAction<boolean>>,
+  repliesToReplies?: Array<FeedbackEntryReply>
 }

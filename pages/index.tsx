@@ -242,21 +242,21 @@ function App() {
                         </div>
                     </div>
 
-                    <Link href="/createFeedback" style={{ textDecoration: 'none'}}>
-                    <div>
-                        <button
-                            style={{ display: 'flex', alignItems: 'center', backgroundColor: '#AD1FEA', color: '#FFFFFF', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}
-                        >
-                            <Image
-                                src={iconPlus}
-                                alt="icon-plus"
-                                width={11}
-                                height={11}
-                                style={{ marginRight: '0.3rem' }}
-                            />
-                            <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Add Feedback</span>
-                        </button>
-                    </div>
+                    <Link href="/createFeedback" style={{ textDecoration: 'none' }}>
+                        <div>
+                            <button
+                                style={{ display: 'flex', alignItems: 'center', backgroundColor: '#AD1FEA', color: '#FFFFFF', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer' }}
+                            >
+                                <Image
+                                    src={iconPlus}
+                                    alt="icon-plus"
+                                    width={11}
+                                    height={11}
+                                    style={{ marginRight: '0.3rem' }}
+                                />
+                                <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Add Feedback</span>
+                            </button>
+                        </div>
                     </Link>
                 </div>
 

@@ -4,7 +4,6 @@ import React, { FC, Dispatch, SetStateAction } from "react";
 import Image from 'next/image';
 // Icons/Images
 import iconCheck from "../assets/icon-check.svg";
-import { Select } from "@nextui-org/react";
 
 interface SelectOptionProps {
   i: number;

@@ -10,6 +10,8 @@
       "title": "Add tags for solutions",
       "category": "enhancement",
       "upvotes": 112,
+      "isUpvoted": true,
+      "upvoteBtnColor": "#F2F4FE",
       "status": "suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [
@@ -67,7 +69,7 @@
                 "name": "Anne Valentine",
                 "username": "annev1990"
               }
-            },
+             },
             {
               "content": "Good point! Using any kind of style extension is great and can be highly customizable, like the ability to change contrast and brightness. I'd prefer not to use one of such extensions, however, for security and privacy reasons.",
               "replyingTo": "annev1990",

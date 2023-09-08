@@ -26,6 +26,8 @@ const Roadmap = () => {
             title={entry.title}
             category={entry.category}
             upvotes={entry.upvotes}
+            isUpvoted={entry.isUpvoted}
+            upvoteBtnColor={entry.upvoteBtnColor}
             status={entry.status}
             description={entry.description}
             comments={entry.comments}
@@ -39,6 +41,7 @@ const Roadmap = () => {
             title={entry.title}
             category={entry.category}
             upvotes={entry.upvotes}
+            upvoteBtnColor={entry.upvoteBtnColor}
             status={entry.status}
             description={entry.description}
             comments={entry.comments}
@@ -52,6 +55,7 @@ const Roadmap = () => {
             title={entry.title}
             category={entry.category}
             upvotes={entry.upvotes}
+            upvoteBtnColor={entry.upvoteBtnColor}
             status={entry.status}
             description={entry.description}
             comments={entry.comments}
