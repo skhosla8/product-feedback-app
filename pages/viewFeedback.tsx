@@ -43,14 +43,6 @@ const ViewFeedback = () => {
         />
     ));
 
-    const handleUpvoteCount = (id: number) => {
-        localStorage.setItem(`upvoted-${id}`, 'true');
-
-        dispatch(increaseUpvote({ id }));
-        dispatch(updateIsUpvotedFieldOnEntry({id }));
-        dispatch(handleUpvoteBtnColor({ id }));
-    }
-
     const addComment = () => {
         let id = Number(currentEntryId);
 
@@ -66,6 +58,12 @@ const ViewFeedback = () => {
 
         dispatch(addCommentToFeedbackEntry({ id, comment }));
         setNewComment('');
+    }
+
+    const handleUpvoteCount = (id: number) => {
+        dispatch(increaseUpvote({ id }));
+        dispatch(updateIsUpvotedFieldOnEntry({ id }));
+        dispatch((handleUpvoteBtnColor({ id })));
     }
 
     const handleNewComment = (e: { target: { value: string }; }) => {

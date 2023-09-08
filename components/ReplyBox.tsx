@@ -2,7 +2,7 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 import { addReplyToComment } from '@/store/slices/feedbackSlice';
-import {  FeedbackEntryUser } from '@/interfaces';
+import { FeedbackEntryUser } from '@/interfaces';
 // Components 
 import { Textarea } from "@nextui-org/react";
 // Icons/Images
@@ -36,7 +36,7 @@ const ReplyBox: FC<ReplyBoxProps> = ({
     const postReplyToComment = () => {
         let commentUsername = replyingTo;
         let replyingToUsername = user?.username;
-        let username = isReplyToComment ? commentUsername! : replyingToUsername!;
+        let username = isReplyToComment ? commentUsername : replyingToUsername;
         let ID = isReplyToComment ? id : commentId;
 
         let newReply = {

@@ -5,7 +5,16 @@ import { FeedbackEntryReply } from '@/interfaces';
 import Image from "next/image";
 import ReplyBox from './ReplyBox';
 
-const FeedbackReply: FC<FeedbackEntryReply> = ({ i, commentId, content, replyingTo, username, user, isReplyToComment, setIsReplyToComment }) => {
+const FeedbackReply: FC<FeedbackEntryReply> = ({
+    i,
+    commentId,
+    content,
+    replyingTo,
+    username,
+    user,
+    isReplyToComment,
+    setIsReplyToComment
+}) => {
     const [isOpenReplyBox, setIsOpenReplyBox] = useState(false);
     const [reply, setReply] = useState('');
 
@@ -14,7 +23,7 @@ const FeedbackReply: FC<FeedbackEntryReply> = ({ i, commentId, content, replying
 
         !isOpenReplyBox && setReply('');
 
-       setIsReplyToComment!(false);
+        setIsReplyToComment!(false);
     }
 
     return (
