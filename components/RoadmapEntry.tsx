@@ -1,10 +1,13 @@
 // Base Imports 
 import React, { FC } from 'react';
+import {  useDispatch } from 'react-redux';
 import { FeedbackEntry } from '@/interfaces';
+import { increaseUpvote, updateIsUpvotedFieldOnEntry, handleUpvoteBtnColor } from '@/store/slices/feedbackSlice';
 // Components
 import Image from 'next/image';
 // Icons/Images
 import iconArrowUpBlue from '../assets/icon-arrow-up-blue.svg';
+import iconArrowUpWhite from '../assets/icon-arrow-up-white.svg';
 import iconComments from '../assets/icon-comments.svg';
 
 const RoadmapEntry: FC<FeedbackEntry> = ({
@@ -12,10 +15,13 @@ const RoadmapEntry: FC<FeedbackEntry> = ({
     title,
     category,
     upvotes,
+    isUpvoted,
+    upvoteBtnColor,
     status,
     description,
     comments
 }) => {
+    const dispatch = useDispatch();
 
     const capitalizeFirstLetterOfWord = (str: string) => {
         let arr = str.split(' ');
@@ -30,6 +36,13 @@ const RoadmapEntry: FC<FeedbackEntry> = ({
 
         return newArr.join(' ');
     };
+
+    const handleUpvoteCount = (id: number) => {
+        dispatch(increaseUpvote({ id }));
+        dispatch(updateIsUpvotedFieldOnEntry({ id }));
+        dispatch((handleUpvoteBtnColor({ id })));
+    }
+
 
     return (
         <div style={{ width: '320px', height: '265px', backgroundColor: '#FFFFFF', borderRadius: '12px', marginTop: '1.5rem' }}>
@@ -48,15 +61,17 @@ const RoadmapEntry: FC<FeedbackEntry> = ({
             <div style={{ margin: '0.8rem 1.6rem', backgroundColor: '#F2F4FF', color: '#4661E6', borderRadius: '8px', fontSize: '0.75rem' , padding: '0.5rem 1rem', width: 'fit-content'}}>{capitalizeFirstLetterOfWord(category)}</div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 1.6rem' }}>
-                <button  style={{ display: 'flex', alignItems: 'center', padding: '0.7rem 1.1rem', border: 'none', backgroundColor: '#F2F4FF', borderRadius: '8px', fontWeight: 'bold', marginTop: '0.3rem', cursor: 'pointer'}} >
+                <button 
+                   style={{ display: 'flex', alignItems: 'center', padding: '0.7rem 1.1rem', border: 'none', backgroundColor: upvoteBtnColor, borderRadius: '8px', fontWeight: 'bold', marginTop: '0.3rem', cursor: 'pointer'}}
+                   onClick={() => handleUpvoteCount(id)}>
                     <Image
-                        src={iconArrowUpBlue}
+                        src={isUpvoted ? iconArrowUpWhite : iconArrowUpBlue}
                         alt="icon-arrow-up"
                         width={10}
                         height={7}
                         style={{ marginRight: '0.6rem'}}
                     />
-                    {upvotes}
+                    <span style={{ color: isUpvoted ? '#FFFFFF': '#3A4374'}}>{upvotes}</span>
                 </button>
 
                 <div style={{ display: 'flex', alignItems: 'center'}}>

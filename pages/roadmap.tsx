@@ -41,6 +41,7 @@ const Roadmap = () => {
             title={entry.title}
             category={entry.category}
             upvotes={entry.upvotes}
+            isUpvoted={entry.isUpvoted}
             upvoteBtnColor={entry.upvoteBtnColor}
             status={entry.status}
             description={entry.description}
@@ -55,6 +56,7 @@ const Roadmap = () => {
             title={entry.title}
             category={entry.category}
             upvotes={entry.upvotes}
+            isUpvoted={entry.isUpvoted}
             upvoteBtnColor={entry.upvoteBtnColor}
             status={entry.status}
             description={entry.description}
